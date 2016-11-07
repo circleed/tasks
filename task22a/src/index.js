@@ -10,6 +10,7 @@ app.use(function(req, res, next) {
     next();
 });
 
+
 app.get('/', (req, res) => {
 
     const a = +req.query.a;

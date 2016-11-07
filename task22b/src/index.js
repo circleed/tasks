@@ -20,9 +20,7 @@ app.get('/', (req, res) => {
     }
 
     const credentials = fullName
-        .replace(new RegExp('^ {1,}'), '')
-        .replace(new RegExp(' {1,}', 'g'), '==')
-        .replace(new RegExp('==', 'g'), ' ')
+        .replace(new RegExp('^ {2,}'), ' ')
         .split(' ');
 
     credentials.map((item, i) => {

@@ -12,15 +12,9 @@ app.use(function(req, res, next) {
 
 app.get('/', (req, res) => {
 
-    const ree = new RegExp('((http:\/\/?)?(https:\/\/?)?(www\.)?([a-z0-9-]+?\.)?([a-z0-9-]+?\/))?(\@?[a-z][a-z0-9._]+(?=\/)?)', 'i');
+    const ree = new RegExp('((http:\/\/?)?(https:\/\/?)?(www\.)?([a-z0-9-]+?\.)?([a-z0-9-]+?\/))?((\@)?([a-z][a-z0-9._]+(?=\/)?))', 'i');
     const username = req.query.username;
-    console.log("url" + req.url);
-    console.log("result : " + username.match(ree));
-    if(username.match(ree)[7].charAt(0) != '@')
-        return res.send("@" + username.match(ree)[7]);
-    else {
-        return res.send(username.match(ree)[7]);
-    }
+    return res.send("@" + username.match(ree)[9]);
 
 });
 

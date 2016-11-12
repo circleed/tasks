@@ -22,12 +22,6 @@ let pc = {};
 fetch(pcUrl)
     .then(async (res) => {
         pc = await res.json();
-        const disks = _.chain(pc.hdd)
-            .keyBy('size')
-            .mapValues('vo')
-            .value();
-        console.log(disks);
-        console.log(pc);
     })
     .catch(err => {
         console.log('Чтото пошло не так:', err);

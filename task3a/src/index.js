@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
 
 app.get('/:param', (req, res) => {
     if(!pc[req.params.param] && req.params.param != 'volumes' && !req.params.param){
-        return res.status(404).send('Not found');
+        return res.status(404).send('Not Found');
     }
 
     switch(req.params.param) {
@@ -67,16 +67,26 @@ app.get('/:param', (req, res) => {
                 "D:" : `${sum[1].size}B`
             });
         }
+        case 'length': {
+            return res.json(pc.length);
+        }
+        case 'height': {
+            return res.json(pc.height);
+        }
+        case 'width': {
+            return res.json(pc.width);
+        }
     }
 
-    return res.status(404).send('Not found');
+    return res.status(404).send('Not Found');
 });
 
 app.get('/:prop1/:prop2', (req, res) => {
-    if(!pc[req.params.prop1] || !pc[req.params.prop1][req.params.prop2]) {
-        return res.status(404).send('Not found');
+    if(!pc[req.params.prop1] ||
+        !pc[req.params.prop1][req.params.prop2] ||
+        req.params.prop2 == 'length'){
+        return res.status(404).send('Not Found');
     }
-
     switch(req.params.prop1) {
         case 'floppy': {
             return res.json(pc.floppy[req.params.prop2]);
@@ -97,53 +107,7 @@ app.get('/:prop1/:prop2', (req, res) => {
             return res.json(pc.ram[req.params.prop2]);
         }
     }
-    return res.status(404).send('Not found');
-});
-
-app.get('/floppy/:prop', (req, res) => {
-    if(req.params.prop) {
-        return res.json(pc.floppy[req.params.prop]);
-    } else {
-        return res.status(404).send('Not found');
-    }
-
-});
-app.get('/board/:prop', (req, res) => {
-    if(req.params.prop) {
-        return res.json(pc.board[req.params.prop]);
-    } else {
-        return res.status(404).send('Not found');
-    }
-});
-app.get('/os/:prop', (req, res) => {
-    if(req.params.prop) {
-        return res.json(pc.os[req.params.prop]);
-    } else {
-        return res.status(404).send('Not found');
-    }
-});
-app.get('/hdd/:prop', (req, res) => {
-    if(req.params.prop && pc.hdd[req.params.prop]) {
-        return res.json(pc.hdd[req.params.prop]);
-    } else {
-        return res.status(404).send('Not found');
-    }
-});
-
-app.get('/monitor/:prop', (req, res) => {
-    if(req.params.prop) {
-        return res.json(pc.monitor[req.params.prop]);
-    } else {
-        return res.status(404).send('Not found');
-    }
-});
-
-app.get('/ram/:prop', (req, res) => {
-    if(req.params.prop) {
-        return res.json(pc.ram[req.params.prop]);
-    } else {
-        return res.status(404).send('Not found');
-    }
+    return res.status(404).send('Not Found');
 });
 
 app.get('/hdd/:propNumber/:propName', (req, res) => {
@@ -151,8 +115,16 @@ app.get('/hdd/:propNumber/:propName', (req, res) => {
         console.log(pc.hdd[+req.params.propNumber][req.params.propName]);
         return res.json(pc.hdd[+req.params.propNumber][req.params.propName]);
     } else {
-        return res.status(404).send('Not found');
+        return res.status(404).send('Not Found');
     }
+});
+
+app.get('/board/vendor/length', (req, res) => {
+    return res.status(404).send('Not Found');
+});
+
+app.get('/board/cpu/hz', (req, res) => {
+    return res.json(pc.board.cpu.hz);
 });
 
 app.listen(3000, () => {
